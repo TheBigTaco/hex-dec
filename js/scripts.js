@@ -17,8 +17,22 @@ function decToHex(number) {
   return output;
 }
 
-
-
+function hexToDec(number) {
+  number = number.toLowerCase();
+  if (/[^\dabcdef]/.test(number)) {
+    return null;
+  }
+  var output = 0;
+  var numberArray = number.split("");
+  numberArray.forEach(function(hexNumber) {
+    var conversion = hexDigits.indexOf(hexNumber);
+    var mathStuff = Math.pow(16, number.length-1);
+    var decimalResult = conversion * mathStuff;
+    number = number.substring(1);
+    output += decimalResult;
+  });
+  return output;
+}
 
 
 
@@ -31,6 +45,15 @@ $(document).ready(function() {
     var output = decToHex(userInput);
     if (output === null) {
       output = "That ain't no number!"
+    }
+    $("#output h1").text(output);
+  });
+  $("form#dec").submit(function(event) {
+    event.preventDefault();
+    var userInput = $("#dec input").val();
+    var output = hexToDec(userInput);
+    if (output === null) {
+      output = "That ain't no hexy number!"
     }
     $("#output h1").text(output);
   });
